@@ -26,7 +26,7 @@ func (errs ebayErrors) RevisionError() bool {
 
 func (errs ebayErrors) ListingEnded() bool {
 	for _, err := range errs {
-		if err.ErrorCode == 291 {
+		if err.ErrorCode == 291 || err.ErrorCode == 17 {
 			return true
 		}
 	}
