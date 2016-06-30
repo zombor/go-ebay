@@ -67,7 +67,7 @@ func Test_AddItem_Body(t *testing.T) {
 				[]NameValueList{
 					NameValueList{
 						Name:  "name",
-						Value: "value",
+						Value: []string{"value"},
 					},
 				},
 			},

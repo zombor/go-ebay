@@ -5,5 +5,6 @@ type ItemSpecifics struct {
 }
 
 type NameValueList struct {
-	Name, Value string
+	Name string
+	Value []string
 }

@@ -55,7 +55,7 @@ func Test_ReviseFixedPriceItem_Body(t *testing.T) {
 				[]NameValueList{
 					NameValueList{
 						Name:  "name",
-						Value: "value",
+						Value: []string{"value"},
 					},
 				},
 			},
