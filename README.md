@@ -41,6 +41,8 @@ The following api calls are currently implemented, with limited field support:
  - ReviseFixedPriceItem
  - GetItem
 
+If you'd like to help out, either completing these api calls, or adding new ones would be great!
+
 ## Contributing
 
  - Add tests
