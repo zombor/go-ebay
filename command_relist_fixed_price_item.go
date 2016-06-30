@@ -13,6 +13,7 @@ type RelistFixedPriceItem struct {
 	PictureDetails        *PictureDetails        `xml:",omitempty"`
 	ShippingDetails       *ShippingDetails       `xml:",omitempty"`
 	ProductListingDetails *ProductListingDetails `xml:",omitempty"`
+	ItemSpecifics         []ItemSpecifics        `xml:",omitempty"`
 }
 
 func (c RelistFixedPriceItem) CallName() string {
