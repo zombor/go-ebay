@@ -11,11 +11,11 @@ func (c GetItem) CallName() string {
 }
 
 func (c GetItem) Body() interface{} {
-	type Item struct {
-		GetItem
+	type ItemID struct {
+		ItemID string `xml:",innerxml"`
 	}
 
-	return Item{c}
+	return ItemID{c.ItemID}
 }
 
 func (c GetItem) ParseResponse(r []byte) (EbayResponse, error) {
@@ -28,8 +28,14 @@ func (c GetItem) ParseResponse(r []byte) (EbayResponse, error) {
 type GetItemResponse struct {
 	ebayResponse
 
-	ItemID        string
-	BuyItNowPrice string
+	Item struct {
+		ItemID        string
+		Quantity      int64
+		SellingStatus struct {
+			ListingStatus string
+			QuantitySold  int64
+		}
+	}
 }
 
 func (r GetItemResponse) ResponseErrors() ebayErrors {

@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 	"strconv"
 )
 
@@ -61,7 +62,9 @@ func (e EbayConf) RunCommand(c Command) (EbayResponse, error) {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 
-	if resp.StatusCode != 200 {
+	if urlErr, ok := err.(*url.Error); ok {
+		return ebayResponse{}, errors.New(urlErr.Error())
+	} else if resp.StatusCode != 200 {
 		// TODO: Make this error better
 		return ebayResponse{}, errors.New(string(resp.StatusCode))
 	}
