@@ -22,5 +22,5 @@ func Test_GetItem_Body(t *testing.T) {
 	b := new(bytes.Buffer)
 	xml.NewEncoder(b).Encode(s.Body())
 
-	assert.Equal(t, "<Item><ItemID>item-id</ItemID></Item>", b.String())
+	assert.Equal(t, "<ItemID>item-id</ItemID>", b.String())
 }

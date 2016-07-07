@@ -33,3 +33,13 @@ func (errs ebayErrors) ListingEnded() bool {
 
 	return false
 }
+
+func (errs ebayErrors) ListingDeleted() bool {
+	for _, err := range errs {
+		if err.ErrorCode == 17 {
+			return true
+		}
+	}
+
+	return false
+}
