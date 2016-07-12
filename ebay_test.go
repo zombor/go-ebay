@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/suite"
@@ -73,6 +74,30 @@ func (s *EbayTestSuite) Test_NewProduction() {
 	c := s.ebayConf.Production()
 
 	s.Equal("https://api.ebay.com", c.baseUrl)
+}
+
+func (s *EbayTestSuite) Test_ReturnsErrorWhenXMLEncodingFails() {
+	var ebayCalled bool
+	type testBody struct {
+		Test string `xml:",omitempty,cdata"`
+	}
+
+	c := funcEbayCommand{
+		callName: "test-command",
+		body:     testBody{"test"},
+	}
+
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		ebayCalled = true
+	}))
+	defer ts.Close()
+	s.ebayConf.baseUrl = ts.URL
+
+	_, err := s.ebayConf.RunCommand(c)
+
+	s.Error(err)
+	s.True(strings.HasPrefix(err.Error(), "xml: "))
+	s.False(ebayCalled)
 }
 
 func TestEbayTestSuite(t *testing.T) {
