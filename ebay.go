@@ -3,7 +3,6 @@ package ebay
 import (
 	"bytes"
 	"encoding/xml"
-	"errors"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -62,20 +61,24 @@ func (e EbayConf) RunCommand(c Command) (EbayResponse, error) {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 
-	if urlErr, ok := err.(*url.Error); ok {
-		return ebayResponse{}, errors.New(urlErr.Error())
+	if urlErr, ok := err.(*url.Error); ok { // TODO: how to unit test this?
+		return ebayResponse{}, urlErr
 	} else if resp.StatusCode != 200 {
-		// TODO: Make this error better
-		return ebayResponse{}, errors.New(string(resp.StatusCode))
+		httpErr := httpError{
+			statusCode: resp.StatusCode,
+		}
+		httpErr.body, _ = ioutil.ReadAll(resp.Body)
+
+		return ebayResponse{}, httpErr
 	}
 
 	bodyContents, _ := ioutil.ReadAll(resp.Body)
 
-	response, err := c.ParseResponse([]byte(bodyContents))
+	response, err := c.ParseResponse(bodyContents)
 
 	if response.Failure() {
 		return response, ebayErrors(response.ResponseErrors())
 	}
 
-	return response, nil
+	return response, err
 }

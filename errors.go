@@ -1,6 +1,9 @@
 package ebay
 
-import "strings"
+import (
+	"fmt"
+	"strings"
+)
 
 type ebayErrors []ebayResponseError
 
@@ -42,4 +45,13 @@ func (errs ebayErrors) ListingDeleted() bool {
 	}
 
 	return false
+}
+
+type httpError struct {
+	statusCode int
+	body       []byte
+}
+
+func (err httpError) Error() string {
+	return fmt.Sprintf("%d - %s", err.statusCode, err.body)
 }
