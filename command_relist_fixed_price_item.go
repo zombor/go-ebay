@@ -37,6 +37,8 @@ func (c RelistFixedPriceItem) ParseResponse(r []byte) (EbayResponse, error) {
 
 type RelistFixedPriceItemResponse struct {
 	ebayResponse
+
+	ItemID string
 }
 
 func (r RelistFixedPriceItemResponse) ResponseErrors() ebayErrors {
