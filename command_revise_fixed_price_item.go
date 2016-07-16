@@ -4,9 +4,9 @@ import "encoding/xml"
 
 type ReviseFixedPriceItem struct {
 	ItemID                string
-	StartPrice            string                 `xml:",omitempty"`
-	ConditionID           uint                   `xml:",omitempty"`
-	Quantity              uint                   `xml:",omitempty"`
+	StartPrice            string `xml:",omitempty"`
+	ConditionID           uint   `xml:",omitempty"`
+	Quantity              uint
 	Title                 string                 `xml:",omitempty"`
 	Description           string                 `xml:",omitempty"`
 	PayPalEmailAddress    string                 `xml:",omitempty"`
