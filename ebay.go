@@ -45,6 +45,10 @@ func (e EbayConf) RunCommand(c Command) (EbayResponse, error) {
 		return ebayResponse{}, err
 	}
 
+	if e.Logger != nil {
+		e.Logger(body.String())
+	}
+
 	req, _ := http.NewRequest(
 		"POST",
 		fmt.Sprintf("%s/ws/api.dll", e.baseUrl),
@@ -75,11 +79,11 @@ func (e EbayConf) RunCommand(c Command) (EbayResponse, error) {
 
 	bodyContents, _ := ioutil.ReadAll(resp.Body)
 
-	response, err := c.ParseResponse(bodyContents)
-
 	if e.Logger != nil {
-		e.Logger(response)
+		e.Logger(string(bodyContents))
 	}
+
+	response, err := c.ParseResponse(bodyContents)
 
 	if response.Failure() {
 		return response, ebayErrors(response.ResponseErrors())
