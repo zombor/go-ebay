@@ -8,18 +8,18 @@ import (
 type ebayErrors []ebayResponseError
 
 func (err ebayErrors) Error() string {
-	var errors []string
+	var errs []string
 
 	for _, e := range err {
-		errors = append(errors, e.LongMessage)
+		errs = append(errs, fmt.Sprintf("%#v", e))
 	}
 
-	return strings.Join(errors, ",")
+	return strings.Join(errs, ", ")
 }
 
 func (errs ebayErrors) RevisionError() bool {
 	for _, err := range errs {
-		if err.ErrorCode == 10039 || err.ErrorCode == 10029 || err.ErrorCode == 21916916 {
+		if err.ErrorCode == 10039 || err.ErrorCode == 10029 || err.ErrorCode == 21916916 || err.ErrorCode == 21916923 || err.ErrorCode == 21919028 {
 			return true
 		}
 	}
@@ -29,7 +29,7 @@ func (errs ebayErrors) RevisionError() bool {
 
 func (errs ebayErrors) ListingEnded() bool {
 	for _, err := range errs {
-		if err.ErrorCode == 291 || err.ErrorCode == 17 {
+		if err.ErrorCode == 291 || err.ErrorCode == 240 {
 			return true
 		}
 	}
