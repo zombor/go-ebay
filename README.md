@@ -15,6 +15,7 @@ conf := EbayConf{
   CertId: "cert-id",
   RuName: "ru-name",
   AuthToken: "auth-token",
+  Logger: logrus.Debug, // Optional
 }
 
 // Use sandbox
@@ -42,6 +43,28 @@ The following api calls are currently implemented, with limited field support:
  - GetItem
 
 If you'd like to help out, either completing these api calls, or adding new ones would be great!
+
+## Logging
+
+You can log both the request and response XML if you pass a logger into the configuration struct.
+
+Pass a function that satisfies the `func(...interface{})` signature. Both the stdlib logger and common loggers like logrus satisfy this function signature.
+
+You can even use logrus structured logs to log with something like a request uuid:
+
+```go
+conf := EbayConf{
+  DevID: "dev-id",
+  AppId: "app-id",
+  CertId: "cert-id",
+  RuName: "ru-name",
+  AuthToken: "auth-token",
+  Logger: logrus.WithFields(logrus.Fields{
+    "request_uuid": "something",
+  }).Debug,
+}
+
+```
 
 ## Contributing
 
