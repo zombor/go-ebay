@@ -16,6 +16,7 @@ type EbayConf struct {
 	DevId, AppId, CertId string
 	RuName, AuthToken    string
 	SiteId               int
+	Logger               func(...interface{})
 }
 
 func (e EbayConf) Sandbox() EbayConf {
@@ -75,6 +76,10 @@ func (e EbayConf) RunCommand(c Command) (EbayResponse, error) {
 	bodyContents, _ := ioutil.ReadAll(resp.Body)
 
 	response, err := c.ParseResponse(bodyContents)
+
+	if e.Logger != nil {
+		e.Logger(response)
+	}
 
 	if response.Failure() {
 		return response, ebayErrors(response.ResponseErrors())
