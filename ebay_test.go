@@ -153,6 +153,7 @@ func (s *EbayTestSuite) Test_ReturnsErrorWhenParseResponseErrors() {
 
 	_, err := s.ebayConf.RunCommand(c)
 	s.Equal(parseErr, err)
+	s.True(ebayCalled)
 }
 
 func (s *EbayTestSuite) Test_ReturnsResponseErrorsWhenResponseParsesAsFailure() {
@@ -193,6 +194,7 @@ func (s *EbayTestSuite) Test_ReturnsResponseErrorsWhenResponseParsesAsFailure() 
 	if ebayErr, ok := err.(ebayErrors); s.True(ok) {
 		s.Equal(errs, ebayErr)
 	}
+	s.True(ebayCalled)
 }
 
 func TestEbayTestSuite(t *testing.T) {
