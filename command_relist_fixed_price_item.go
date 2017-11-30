@@ -4,14 +4,15 @@ import "encoding/xml"
 
 type RelistFixedPriceItem struct {
 	ItemID                string
-	StartPrice            string                 `xml:",omitempty"`
-	ConditionID           uint                   `xml:",omitempty"`
-	Quantity              uint                   `xml:",omitempty"`
-	Title                 string                 `xml:",omitempty"`
-	Description           string                 `xml:",omitempty"`
-	PayPalEmailAddress    string                 `xml:",omitempty"`
-	PictureDetails        *PictureDetails        `xml:",omitempty"`
-	ShippingDetails       *ShippingDetails       `xml:",omitempty"`
+	StartPrice            string           `xml:",omitempty"`
+	ConditionID           uint             `xml:",omitempty"`
+	Quantity              uint             `xml:",omitempty"`
+	Title                 string           `xml:",omitempty"`
+	Description           string           `xml:",omitempty"`
+	PayPalEmailAddress    string           `xml:",omitempty"`
+	PictureDetails        *PictureDetails  `xml:",omitempty"`
+	ShippingDetails       *ShippingDetails `xml:",omitempty"`
+	PrimaryCategory       *PrimaryCategory
 	ProductListingDetails *ProductListingDetails `xml:",omitempty"`
 	ItemSpecifics         []ItemSpecifics        `xml:",omitempty"`
 }
