@@ -13,6 +13,7 @@ type RelistFixedPriceItem struct {
 	PictureDetails        *PictureDetails  `xml:",omitempty"`
 	ShippingDetails       *ShippingDetails `xml:",omitempty"`
 	PrimaryCategory       *PrimaryCategory
+	ReturnPolicy          *ReturnPolicy          `xml:",omitempty"`
 	ProductListingDetails *ProductListingDetails `xml:",omitempty"`
 	ItemSpecifics         []ItemSpecifics        `xml:",omitempty"`
 }
